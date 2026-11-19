@@ -14,6 +14,7 @@ var app = builder.Build();
 
 app.MapGet("/ping",(MapDbContext db) => db.Users.Count());
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
