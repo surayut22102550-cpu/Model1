@@ -5,12 +5,16 @@ using Model1.Models;
 public class RestaurantController(MapDbContext db) : ControllerBase
 {
     [HttpGet("system/api/restaurant/list")]
-    public ApiResult List(int pageNum = 1, int pageSize = 10,
-    string? restaurantName = null, string? restaurantType = null)
+    public ApiResult List(
+        int pageNum = 1,
+        int pageSize = 10,
+        string? restaurantName = null, 
+        string? restaurantType = null )
+
     {
-        var q = db.Restaurants.AsQueryable();
+        var q = db.Restaurants.AsQueryable(); //ใช้เชื่อมต่อตาราง Restaurant
         if (!string.IsNullOrEmpty(restaurantName))
-            q = q.Where(x => x.RestaurantName!.Contains(restaurantName));
+            q = q.Where(x => x.RestaurantName!.Contains(restaurantName)); //เอาชื่อร้านเข้ามาเก็บที่ q
         if (!string.IsNullOrEmpty(restaurantType))
             q = q.Where(x => x.RestaurantType == restaurantType);
 
@@ -31,7 +35,8 @@ public class RestaurantController(MapDbContext db) : ControllerBase
             x.Description,
             distance = x.Distance.ToString(),
             businessType = "restaurant"
-        });
+        }
+            );
         return ApiResult.Ok(new { total, rows });
     }
 }
